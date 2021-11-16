@@ -1,3 +1,4 @@
+using AplikacjaInternetowa.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,6 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AplikacjaInternetowa.Configuration;
+using Microsoft.OpenApi.Models;
+using AplikacjaInternetowa.Interfaces;
+using AplikacjaInternetowa.Services;
+using Microsoft.EntityFrameworkCore;
+using AplikacjaInternetowa.DAL.Contexts;
 
 namespace AplikacjaInternetowa
 {
@@ -24,6 +31,15 @@ namespace AplikacjaInternetowa
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddSwaggerGen(x => { x.SwaggerDoc("v1", new OpenApiInfo { Title = "Nazwa Twojego API", Version = "v1" }); });
+
+            services.AddSingleton<IObslugaBazDanych, ObslugaBazyDanych>();
+
+            services.AddDbContext<DziekanatContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DziekanatDatabaseConnection")));
+            
+            services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +61,15 @@ namespace AplikacjaInternetowa
             app.UseRouting();
 
             app.UseAuthorization();
+
+            var swaggerOptions = new SwaggerOptions();
+
+            Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
+
+            app.UseSwagger(option => { option.RouteTemplate = swaggerOptions.JsonRoute; });
+            app.UseSwaggerUI(option => { option.SwaggerEndpoint(swaggerOptions.UIEndpoint, swaggerOptions.Description); });
+
+
 
             app.UseEndpoints(endpoints =>
             {
