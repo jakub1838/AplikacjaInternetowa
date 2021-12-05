@@ -24,6 +24,7 @@ namespace AplikacjaInternetowa.Controllers
         {
             this.obslugaBazyDanych = obslugaBazyDanych;
             this.bazaDanychDziekanatu = bazaDanychDziekanatu;
+            this.obslugaBazyDanych.Context = bazaDanychDziekanatu;
         }
         public IActionResult Index()
         {
@@ -34,34 +35,32 @@ namespace AplikacjaInternetowa.Controllers
         [Route("/Planzajec")]
         public IActionResult PlanZajec()
         {
-            /*
-            List<Zajecia> planZajec = new List<Zajecia>()
-            {
-                new Zajecia(DateTime.Now, "Progs1", "Chicago", 1),
-                new Zajecia(DateTime.Now.AddHours(8), "Progs2", "Chicago", 2),
-                new Zajecia(DateTime.Now.AddDays(2), "Progs3", "Chicago", 3),
-            };
-            */
-            List<Zajecia> planZajec = bazaDanychDziekanatu.Zajecia.ToList();
-
+            List<Zajecia> planZajec = obslugaBazyDanych.GetZajecia();
             return View(planZajec);
         }
+        /*
         [HttpGet]
-        [Route("{controller}/hello")]
+        [Route("/Studenci")]
+        public IActionResult 
+        [HttpGet]
+        [Route("{controller}/hello")]*/
         public IActionResult Powitanie()
         {
             return Ok("Hello world!");
         }
-        [HttpPost]
-        [Route("{controller}/DodajDoPlanu/{nazwa}")]
-
-        public IActionResult DodajDoPlanu(string nazwa)
+        [HttpGet]
+        [Route("{controller}/DodajDoPlanuForm")]
+        public IActionResult DodajDoPlanuForm()
         {
-            if (nazwa == null) return BadRequest(new { komunikat = $"Zle" });
+            return View();
+        }
+        [HttpPost]
+        [Route("{controller}/DodajDoPlanu")]
 
-            string komunikat = obslugaBazyDanych.DodajZajeciaDoPlanu(nazwa);
-
-            return Ok(new { komunikat = komunikat });
+        public IActionResult DodajDoPlanu(Zajecia zajecia)
+        {
+            obslugaBazyDanych.DodajZajeciaDoPlanu(zajecia);
+            return Ok($"Dodano zajecia {zajecia.NazwaZajec} do planu");
             
         }
     }

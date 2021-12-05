@@ -37,6 +37,7 @@ namespace AplikacjaInternetowa
                 try
                 {
                     var context = services.GetRequiredService<DziekanatContext>(); // ustawic odpowiedni typ
+                    /*context.Database.EnsureDeleted();*/
                     DziekanatDatabaseinitialiser.Initialize(context); //<-- ustawic odpowiednia nazwe klasy
                 }
                 catch (Exception ex)

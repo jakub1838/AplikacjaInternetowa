@@ -1,4 +1,6 @@
-﻿using AplikacjaInternetowa.Interfaces;
+﻿using AplikacjaInternetowa.DAL.Contexts;
+using AplikacjaInternetowa.DAL.Models;
+using AplikacjaInternetowa.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +10,16 @@ namespace AplikacjaInternetowa.Services
 {
     public class ObslugaBazyDanych : IObslugaBazDanych
     {
-        public string DodajZajeciaDoPlanu(string nazwa)
+        public DziekanatContext Context { get; set; }
+        public void DodajZajeciaDoPlanu(Zajecia zajecia)
         {
-            int id = new Random().Next();
-            string komunikat = $"Zajecia o nazwie {nazwa} zostały dodane do planu pod id {id}";
-            Console.WriteLine(komunikat);
-            return komunikat;
+            Context.Zajecia.Add(zajecia);
+            Context.SaveChanges();
+        }
+
+        public List<Zajecia> GetZajecia()
+        {
+            return Context.Zajecia.ToList();
         }
     }
 }

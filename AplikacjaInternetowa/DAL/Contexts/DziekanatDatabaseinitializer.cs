@@ -13,11 +13,15 @@ namespace AplikacjaInternetowa.Data
         {
             context.Database.EnsureCreated();
 
+            InitializeZajecia(context);
+        }
+
+        private static void InitializeZajecia(DziekanatContext context)
+        {
             if (context.Zajecia.Any())
             {
                 return;
             }
-            
 
             var zajecia = new Zajecia[]
             {
@@ -33,8 +37,27 @@ namespace AplikacjaInternetowa.Data
 
             context.AddRange(zajecia);
             context.SaveChanges();
-
-          
         }
+        /*
+        public static void InitializeStudent(DziekanatContext context)
+        {
+            if (context.Studenci.Any())
+            {
+                return;
+            }
+
+            var studenci = new Student[]
+            { 
+                new Student { NumerIndeksu = "111", Imie = "Adam", Nazwisko = "Nowak" }, 
+                new Student { NumerIndeksu = "222", Imie = "Andrzej", Nazwisko = "Duda" }, 
+                new Student { NumerIndeksu = "333", Imie = "Anna", Nazwisko = "Rożek" }, 
+                new Student { NumerIndeksu = "444", Imie = "Justyna", Nazwisko = "Dzik" }, 
+                new Student { NumerIndeksu = "555", Imie = "Micha  ł", Nazwisko = "Lis" }, 
+                new Student { NumerIndeksu = "666", Imie = "Daria", Nazwisko = "Nowak" }, 
+                new Student { NumerIndeksu = "777", Imie = "Mateusz", Nazwisko = "Mostowiak" } };
+
+            context.AddRange(studenci);
+            context.SaveChanges();
+        }*/
     }
 }
