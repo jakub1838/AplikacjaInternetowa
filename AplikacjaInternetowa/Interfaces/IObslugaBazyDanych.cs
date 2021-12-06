@@ -8,7 +8,9 @@ namespace AplikacjaInternetowa.Interfaces
     {
         public DziekanatContext Context { get; set; }
         void DodajZajeciaDoPlanu(Zajecia zajecia);
+        void DodajStudent(Student student);
+        string UsunStudent(int id);
         List<Zajecia> GetZajecia();
-
+        List<Student> GetStudenci();
     }
 }

@@ -1,5 +1,5 @@
 using AplikacjaInternetowa.DAL.Contexts;
-using AplikacjaInternetowa.Data;
+/*using AplikacjaInternetowa.Data;*/
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +38,7 @@ namespace AplikacjaInternetowa
                 {
                     var context = services.GetRequiredService<DziekanatContext>(); // ustawic odpowiedni typ
                     /*context.Database.EnsureDeleted();*/
-                    DziekanatDatabaseinitialiser.Initialize(context); //<-- ustawic odpowiednia nazwe klasy
+                    /*DziekanatDatabaseinitialiser.Initialize(context); //<-- ustawic odpowiednia nazwe klasy*/
                 }
                 catch (Exception ex)
                 {

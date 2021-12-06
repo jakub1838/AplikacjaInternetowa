@@ -14,6 +14,6 @@ namespace AplikacjaInternetowa.DAL.Contexts //zmien
 
         }
         public DbSet<Zajecia> Zajecia { get; set; }
-        /*public DbSet<Student> Studenci { get; set; }*/
+        public DbSet<Student> Studenci { get; set; }
     }
 }

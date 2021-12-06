@@ -1,4 +1,5 @@
-﻿using AplikacjaInternetowa.DAL.Contexts;
+﻿/*
+using AplikacjaInternetowa.DAL.Contexts;
 using AplikacjaInternetowa.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,11 @@ namespace AplikacjaInternetowa.Data
     {
         public static void Initialize(DziekanatContext context) // publiczna, statyczna metoda ma przyjmować zmienną typu Context naszej bazy
         {
+            
             context.Database.EnsureCreated();
-
+            
             InitializeZajecia(context);
+            InitializeStudent(context);
         }
 
         private static void InitializeZajecia(DziekanatContext context)
@@ -38,7 +41,7 @@ namespace AplikacjaInternetowa.Data
             context.AddRange(zajecia);
             context.SaveChanges();
         }
-        /*
+        
         public static void InitializeStudent(DziekanatContext context)
         {
             if (context.Studenci.Any())
@@ -58,6 +61,6 @@ namespace AplikacjaInternetowa.Data
 
             context.AddRange(studenci);
             context.SaveChanges();
-        }*/
+        }
     }
-}
+}*/

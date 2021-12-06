@@ -1,0 +1,42 @@
+﻿@model List<AplikacjaInternetowa.DAL.Models.Student>
+
+<h1>Plan zajęć</h1>
+<hr/>
+<table>
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                NumerIndeksu
+            </th>
+            <th>
+                Imie
+            </th>
+            <th>
+                Nazwisko
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.ID
+                    </td>
+                    <td>
+                        @item.NumerIndeksu
+                    </td>
+                    <td>
+                        @item.Imie
+                    </td>
+                    <td>
+                        @item.Nazwisko
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -38,12 +38,17 @@ namespace AplikacjaInternetowa.Controllers
             List<Zajecia> planZajec = obslugaBazyDanych.GetZajecia();
             return View(planZajec);
         }
-        /*
+        
         [HttpGet]
         [Route("/Studenci")]
-        public IActionResult 
+        public IActionResult Studenci()
+        {
+            List<Student> studenci = obslugaBazyDanych.GetStudenci();
+            return View(studenci);
+        }
+
         [HttpGet]
-        [Route("{controller}/hello")]*/
+        [Route("{controller}/hello")]
         public IActionResult Powitanie()
         {
             return Ok("Hello world!");
@@ -62,6 +67,45 @@ namespace AplikacjaInternetowa.Controllers
             obslugaBazyDanych.DodajZajeciaDoPlanu(zajecia);
             return Ok($"Dodano zajecia {zajecia.NazwaZajec} do planu");
             
+        }
+        [HttpGet]
+        [Route("{controller}/DodajDoStudentForm")]
+        public IActionResult DodajDoStudentForm()
+        {
+            return View();
+        }
+        [HttpPost]
+        [Route("{controller}/DodajDoStudent")]
+        public IActionResult DodajDoStudent(Student student)
+        {
+            try {
+                obslugaBazyDanych.DodajStudent(student);
+                return Ok($"Dodano {student.Imie} {student.Nazwisko} do listy studentów");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        /* widok nie działa 
+        [HttpGet("{controller}/UsunStudentForm")]
+        public IActionResult UsunStudentForm()
+        {
+            return View();
+        }
+        */
+        [HttpDelete("{ID}")]
+        public IActionResult UsunStudent(int ID)
+        {
+            try
+            {
+                string osoba = obslugaBazyDanych.UsunStudent(ID);
+                return Ok($"Usunieto {osoba} z listy studentów");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
