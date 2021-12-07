@@ -40,6 +40,8 @@ namespace AplikacjaInternetowa
                 options.UseSqlServer(Configuration.GetConnectionString("DziekanatDatabaseConnection")));
             
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddScoped<IObslugaBazDanych, ObslugaBazyDanych>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

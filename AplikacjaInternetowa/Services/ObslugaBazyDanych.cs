@@ -14,21 +14,38 @@ namespace AplikacjaInternetowa.Services
 
         public void DodajStudent(Student student)
         {
-            if (int.Parse(student.NumerIndeksu) < 1000 && int.Parse(student.NumerIndeksu) > 0)
+            using var transaction = Context.Database.BeginTransaction();
+            try
             {
-                Context.Studenci.Add(student);
-                Context.SaveChanges();
+                if (int.Parse(student.NumerIndeksu) < 1000 && int.Parse(student.NumerIndeksu) > 0)
+                {
+                    Context.Studenci.Add(student);
+                    Context.SaveChanges();
+                    transaction.Commit();
+                }
+                else
+                {
+                    throw new ArgumentException("Numer indeksu musi się mieścić pomiędzy 0 a 1000");
+                }
             }
-            else
+            catch (Exception)
             {
-                throw new ArgumentException("Numer indeksu musi się mieścić pomiędzy 0 a 1000");
+                transaction.Rollback();
             }
-           
         }
         public void DodajZajeciaDoPlanu(Zajecia zajecia)
         {
-            Context.Zajecia.Add(zajecia);
-            Context.SaveChanges();
+            using var transaction = Context.Database.BeginTransaction();
+            try
+            {
+                Context.Zajecia.Add(zajecia);
+                Context.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+            }
         }
 
         public List<Student> GetStudenci()
@@ -43,14 +60,21 @@ namespace AplikacjaInternetowa.Services
 
         public string UsunStudent(int id)
         {
-            
-            var student = Context.Studenci.First(m => m.ID == id);
-            string jakokolwiek = $"{student.Imie} {student.Nazwisko}";
-            if (student is null) throw new ArgumentException("Student nie istnieje");
-            Context.Studenci.Remove(student);
-            Context.SaveChanges();
-            return jakokolwiek;
-            
+            using var transaction = Context.Database.BeginTransaction();
+            try
+            {
+                var student = Context.Studenci.First(m => m.ID == id);
+                string s = $"{student.Imie} {student.Nazwisko}";
+                if (student is null) throw new ArgumentException("Student nie istnieje");
+                Context.Studenci.Remove(student);
+                Context.SaveChanges();
+                transaction.Commit();
+                return s;
+            } catch (Exception)
+            {
+                transaction.Rollback();
+                return "Bad";
+            }
         }
     }
 }

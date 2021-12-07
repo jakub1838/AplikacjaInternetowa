@@ -87,7 +87,7 @@ namespace AplikacjaInternetowa.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        /* widok nie działa 
+        /* widok nie działa :C
         [HttpGet("{controller}/UsunStudentForm")]
         public IActionResult UsunStudentForm()
         {
