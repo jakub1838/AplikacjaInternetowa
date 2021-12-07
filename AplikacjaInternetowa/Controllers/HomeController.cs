@@ -20,6 +20,8 @@ namespace AplikacjaInternetowa.Controllers
 
         private readonly DziekanatContext bazaDanychDziekanatu;
 
+        private IObslugaBazDanych iobslugabazdanych;
+
         public HomeController(IObslugaBazDanych obslugaBazyDanych, DAL.Contexts.DziekanatContext bazaDanychDziekanatu = null)
         {
             this.obslugaBazyDanych = obslugaBazyDanych;
